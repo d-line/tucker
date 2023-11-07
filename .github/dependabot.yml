@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: "node"
+    directory: "/frontend"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "node"
+    directory: "/backend"
+    schedule:
+      interval: "daily"

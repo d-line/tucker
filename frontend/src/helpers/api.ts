@@ -50,3 +50,13 @@ export const subscribe = async (feedUrl: string) => {
   const data = await res.data;
   return data;
 }
+
+export const updateStory = async(id: string, body: unknown) => {
+  const res = await axios.patch(`/story/${id}`, body);
+  if (res.status !== 200) {
+    throw new Error("Story update failed");
+  }
+  const data = await res.data;
+  return data;
+
+}

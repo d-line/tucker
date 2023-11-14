@@ -61,7 +61,7 @@ const modifyFeed = async (rawFeed, feed) => {
 
   if (isNewStory) {
     const lastFetched = moment().toDate();
-    Object.assign(feed, { lastFetched });
+    feed.lastFetched = lastFetched;
     await feed.save();
     console.log(`[ LST FTCH ] => ${lastFetched} for ${feed.url} ${feed.name}`);
   }

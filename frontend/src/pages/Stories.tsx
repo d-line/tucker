@@ -18,6 +18,10 @@ const Stories = () => {
 
   const [stories, setStories] = useState<Story[]>([]);
 
+  const onRead = (id: string) => {
+    setStories([ ...stories.filter(s => s.id !== id)])
+  }
+
   useLayoutEffect(() => {
     if (auth?.isLoggedIn && auth.user) {
       toast.loading("Loading Stories", { id: "loadStories" });
@@ -44,7 +48,7 @@ const Stories = () => {
       mx: 3
     }}>
       { stories.map(story => (
-        <Story {...story} key={story.id}/>
+        <Story {...story} key={story.id} onRead={(() => onRead(story.id))}/>
       ))}
     </Box>
   )

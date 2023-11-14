@@ -1,6 +1,28 @@
 import rssFinder from "rss-finder";
-import Parser from "rss-parser";
 import { NextFunction } from "express";
+import Parser from "rss-parser";
+
+export const parser = new Parser({
+  customFields: {
+    item: ["media:group", "maz:modified"],
+  },
+});
+
+export const isYoutube = (rawStory): string => {
+  if (rawStory["media:group"] !== undefined) {
+    const url = rawStory["media:group"]["media:content"][0].$.url;
+    const thumbnail = rawStory["media:group"]["media:thumbnail"][0].$.url;
+    return `<div class="youtube"><a href="${url}"><img src="${thumbnail}"></a></div>`;
+  }
+  return rawStory.content;
+};
+
+export const getEntryId = (rawStory: any): string => {
+  if (rawStory.guid && typeof rawStory.guid === "string") {
+    return rawStory.guid;
+  }
+  return rawStory.id || rawStory.link;
+};
 
 export const getFeedForURL = async (url: string, next: NextFunction) => {
   const response = await fetch(url);
@@ -19,7 +41,6 @@ export const getFeedForURL = async (url: string, next: NextFunction) => {
   const decoder = new TextDecoder(charset);
   const str = decoder.decode(buff);
 
-  const parser = new Parser();
   try {
     const feed = await parser.parseString(str);
     feed.feedUrl = feed.feedUrl || url;

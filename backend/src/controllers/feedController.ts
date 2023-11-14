@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import Feed from "../models/Feed.js";
-import { discoverFeed } from "../utils/discover.js";
+import { discoverFeed, getEntryId, isYoutube } from "../utils/discover.js";
 import Story from "../models/Story.js";
 
 export const getFeeds = async (
@@ -58,10 +58,10 @@ export const feedSubscribe = async (
         const story = new Story({
           title: item.title,
           permalink: item.link,
-          body: item.content,
+          body: isYoutube(item) || item["content:encoded"] || "",
           feed,
           published: new Date(item.pubDate),
-          entryId: item.link,
+          entryId: getEntryId(item)
         });
         await story.save();
       })

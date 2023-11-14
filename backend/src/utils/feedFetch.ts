@@ -5,23 +5,9 @@ import axios from "axios";
 import Parser from "rss-parser";
 import moment from "moment";
 import Story from "../models/Story.js";
+import { getEntryId, isYoutube, parser } from "./discover.js";
 
 config();
-
-const parser = new Parser({
-  customFields: {
-    item: ["media:group", "maz:modified"],
-  },
-});
-
-const isYoutube = (rawStory): string => {
-  if (rawStory["media:group"] !== undefined) {
-    const url = rawStory["media:group"]["media:content"][0].$.url;
-    const thumbnail = rawStory["media:group"]["media:thumbnail"][0].$.url;
-    return `<div class="youtube"><a href="${url}"><img src="${thumbnail}"></a></div>`;
-  }
-  return rawStory.content;
-};
 
 const getPubDate = (rawStory: any): Date => {
   if (rawStory.pubDate) return moment(rawStory.pubDate).toDate();
@@ -31,12 +17,6 @@ const getPubDate = (rawStory: any): Date => {
   return new Date();
 };
 
-const getEntryId = (rawStory: any): string => {
-  if (rawStory.guid && typeof rawStory.guid === "string") {
-    return rawStory.guid;
-  }
-  return rawStory.id || rawStory.link;
-};
 
 const addStory = async (rawStory, feed) => {
   const createStory = {

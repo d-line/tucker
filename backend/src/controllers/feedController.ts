@@ -32,7 +32,6 @@ export const feedSubscribe = async (
   try {
     const { url } = req.body;
     const discovered = await discoverFeed(url);
-
     if (!discovered) {
       return res.status(500).json({
         message: "ERROR",

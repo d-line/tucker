@@ -38,3 +38,15 @@ export const getFeeds = async () => {
   return data;
 
 }
+
+export const subscribe = async (feedUrl: string) => {
+  const req = {
+    url: feedUrl
+  }
+  const res = await axios.post("/feed", req);
+  if (res.status !== 201) {
+    throw new Error("Feed subscibe failed");
+  }
+  const data = await res.data;
+  return data;
+}

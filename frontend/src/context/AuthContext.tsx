@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const signup = async (password: string) => {};
+  const signup = async (_password: string) => {};
 
   const logout = async () => {};
 

@@ -10,7 +10,9 @@ export const getUser = async (
 ) => {
   try {
     const users = await User.find();
-    return res.status(200).json(users);
+    return res.status(200).json(users.map(user => ({
+      id: user._id
+    })));
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "ERROR", cause: error });

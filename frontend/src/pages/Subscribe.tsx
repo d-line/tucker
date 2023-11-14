@@ -1,26 +1,25 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React from "react";
-import { IoIosLogIn } from "react-icons/io";
-import { useAuth } from "../context/AuthContext";
+import { IoIosAddCircle } from "react-icons/io";
 import toast from "react-hot-toast";
+import { subscribe } from "../helpers/api";
 
-const Login = () => {
-  const auth = useAuth();
+const Subscribe = () => {
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const password = formData.get("password") as string;
+    const url = formData.get("url") as string;
 
     try {
-      toast.loading("Signing In", { id: "login" });
-      await auth?.login(password);
-      toast.success("Signed In Successfully", { id: "login" });
+        toast.loading("Subscribing", { id: "subscribe" });
+        await subscribe(url);
+        toast.success("Feed Added Successfully", { id: "subscribe" });
     } catch (error) {
-      console.log(error);
-      toast.error("Signing In Failed", { id: "login" });
+        console.log(error);
+        toast.error("Subscribe Failed", { id: "subscribe" });
     }
-  };
+  }
 
   return (
     <Box width={"100%"} height={"100%"} display="flex" flex={1}>
@@ -34,7 +33,7 @@ const Login = () => {
         mt={16}
       >
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubscribe}
           style={{
             margin: "auto",
             padding: "30px",
@@ -56,9 +55,14 @@ const Login = () => {
               padding={2}
               fontWeight={600}
             >
-              Login
+              Add Feed URL
             </Typography>
-            <TextField id="password" type="password" name="password" label="Password" />
+            <TextField
+              id="url"
+              type="text"
+              name="url"
+              label="URL"
+            />
             <Button
               variant="contained"
               type="submit"
@@ -66,12 +70,12 @@ const Login = () => {
                 px: 2,
                 py: 1,
                 mt: 2,
-                width: "400px",
+                width: "600px",
                 borderRadius: 2,
               }}
-              endIcon={<IoIosLogIn />}
+              endIcon={<IoIosAddCircle />}
             >
-              Login
+              Subscribe
             </Button>
           </Box>
         </form>
@@ -80,4 +84,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Subscribe;

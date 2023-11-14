@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -36,9 +36,7 @@ const Feeds = () => {
     }
   }, [auth]);
 
-  const feedsList = feeds.map((feed) => <li key={feed.id}>{feed.name}</li>);
-
-  return <ul>{feedsList}</ul>;
+  return <pre style={{'textAlign': 'left'}}>{JSON.stringify(feeds, null, 2)}</pre>;
 };
 
 export default Feeds;

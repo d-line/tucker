@@ -39,6 +39,7 @@ const storySchema = new mongoose.Schema(
     entryId: {
       type: String,
       required: true,
+      unique: true
     },
   },
   {

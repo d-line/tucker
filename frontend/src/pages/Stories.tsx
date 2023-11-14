@@ -1,12 +1,15 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { getStories } from "../helpers/api";
+import { Box } from "@mui/material";
+import Story from "../components/Story";
 
 type Story = {
   id: string;
   title: string;
+  permalink: string;
 };
 
 const Stories = () => {
@@ -20,7 +23,7 @@ const Stories = () => {
       toast.loading("Loading Stories", { id: "loadStories" });
       getStories()
         .then((data) => {
-          setStories([...data.stories]);
+          setStories([...data]);
           toast.success("Successfully loaded stories", { id: "loadStories" });
          })
         .catch((err) => {
@@ -36,7 +39,15 @@ const Stories = () => {
     }
   }, [auth]);
 
-  return <div>Stories</div>;
+  return (
+    <Box sx={{
+      mx: 3
+    }}>
+      { stories.map(story => (
+        <Story {...story} key={story.id}/>
+      ))}
+    </Box>
+  )
 };
 
 export default Stories;

@@ -1,0 +1,27 @@
+version: "3.4"
+
+services:
+  tuckerbackend:
+    image: tuckerbackend
+    build:
+      context: backend
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: development
+      MONGODB_URL: mongodb://mongo:27017/tucker
+    ports:
+      - 3000:3000
+      - 9229:9229
+    command: ["node", "--inspect=0.0.0.0:9229", "index.ts"]
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_db:/data/db
+
+volumes:
+  mongo_db:

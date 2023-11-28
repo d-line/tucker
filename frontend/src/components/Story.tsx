@@ -64,7 +64,8 @@ const Story = (props: any) => {
           mb: 2,
         }}
       >
-        <div dangerouslySetInnerHTML={{ __html: body }}></div>
+        <div className="story-content" dangerouslySetInnerHTML={{ __html: body }}></div>
+        <div style={{"clear": "both"}}></div>
         <ButtonGroup
           variant="contained"
           sx={{

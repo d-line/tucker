@@ -1,10 +1,14 @@
-import { Box, Button, ButtonGroup } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Button, ButtonGroup, Typography } from "@mui/material";
 import { IoMdDoneAll, IoMdShareAlt, IoMdStar } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { updateStory } from "../helpers/api";
+import { MdExpandMore } from "react-icons/md";
+import { useState } from "react";
 
 const Story = (props: any) => {
   const { id, title, feed, body, permalink, onRead } = props;
+
+  const [expanded, setExpanded] = useState<string | false>(false);
 
   const stripHtml = (html: string) =>
     html ? html.replace(/<\/?[^>]+(>|$)/g, "") : "";
@@ -16,57 +20,31 @@ const Story = (props: any) => {
     onRead();
   };
 
+  const handleChange =
+    (panel: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
+      setExpanded(isExpanded ? panel : false);
+    };
+
   return (
-    <>
-      <Box
-        sx={{
-          border: "3px solid white",
-          background: "white",
-          borderRadius: "5px",
-          mb: 1,
-          color: "#484948",
-          height: "30px",
-          lineHeight: "30px",
-          cursor: "pointer",
-          textOverflow: "ellipsis",
-          overflow: "hidden",
-          whiteSpace: "nowrap",
-          display: "flex",
-          direction: "row",
-          gap: "5px",
+    <Accordion expanded={expanded === id} onChange={handleChange(id)}>
+    <AccordionSummary
+      expandIcon={<MdExpandMore />}
+      aria-controls={`${id}-bh-content`}
+      id={`${id}-bh-header`}
+    >
+      <Avatar>{feed.name[0]}</Avatar>
+      <Typography sx={{ flex: 1, textAlign: 'left', height: '30px', lineHeight: '32px', px: 1,
+        overflow: "hidden", whiteSpace: "nowrap"}} noWrap>
+        {feed.name}
+      </Typography>
+      <Typography sx={{ overflow: "hidden", flex: 1, whiteSpace: "nowrap", textAlign: 'left' }} noWrap>{stripHtml(title)}</Typography>
+    </AccordionSummary>
+    <AccordionDetails sx={{
           textAlign: "left",
-          px: 2,
-        }}
-      >
-        <div
-          style={{
-            minWidth: "200px",
-          }}
-        >
-          {feed.name}:
-        </div>
-        <div>{stripHtml(title)}</div>
-        <div
-          style={{
-            color: "#c5c5c5",
-          }}
-        >
-          {stripHtml(body)}
-        </div>
-      </Box>
-      <Box
-        sx={{
-          border: "3px solid black",
-          borderRadius: "5px",
-          textAlign: "left",
-          px: 2,
-          py: 2,
-          mb: 2,
-        }}
-      >
-        <div className="story-content" dangerouslySetInnerHTML={{ __html: body }}></div>
-        <div style={{"clear": "both"}}></div>
-        <ButtonGroup
+    }}>
+      <div className="story-content" dangerouslySetInnerHTML={{ __html: body }}></div>
+      <div style={{"clear": "both"}}></div>
+      <ButtonGroup
           variant="contained"
           sx={{
             mt: 1,
@@ -85,9 +63,9 @@ const Story = (props: any) => {
           </Button>
           <Button startIcon={<IoMdStar />}>Star</Button>
         </ButtonGroup>
-      </Box>
-    </>
-  );
+    </AccordionDetails>
+  </Accordion>
+  )
 };
 
 export default Story;

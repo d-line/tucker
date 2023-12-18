@@ -7,7 +7,7 @@ export const getStories = async (
   _next: NextFunction
 ) => {
   try {
-    const stories = await Story.find({isRead: false}).sort({ published: -1 }).limit(250).populate("feed");
+    const stories = await Story.find({isRead: false}).sort({ published: -1 }).limit(10).populate("feed");
     return res.status(200).json(
       stories.map((story) => ({
         id: story._id,

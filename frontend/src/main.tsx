@@ -13,7 +13,7 @@ axios.defaults.withCredentials = true;
 
 const theme = createTheme({
   typography: {
-    fontFamily: "Exo 2, sans-erif",
+    fontFamily: "'Exo 2', sans-erif",
     allVariants: { color: "#484948" },
   },
 });

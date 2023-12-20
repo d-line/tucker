@@ -26,16 +26,16 @@ const Header = () => {
     >
       <Toolbar sx={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
         <div>
-          <Button variant="contained" onClick={toStories}  startIcon={<TiArrowBack />}>Stories</Button>
+          <Button variant="contained" onClick={toStories} size="large" startIcon={<TiArrowBack />}/>
         </div>
         <div style={{
           display: 'flex',
           gap: '5px'
         }}>
-          <Button variant="outlined" onClick={toStories}  startIcon={<AiFillStar />}>Starred</Button>
-          <Button variant="outlined" onClick={toStories}  startIcon={<BsFillArchiveFill />}>Archived</Button>
-          <Button variant="outlined" onClick={toFeeds}  startIcon={<AiOutlineUnorderedList />}>Feeds</Button>
-          <Button variant="outlined" onClick={toSubscribe}  startIcon={<SiAddthis />}>Add</Button>
+          <Button variant="outlined" onClick={toStories} size="large" startIcon={<AiFillStar />}></Button>
+          <Button variant="outlined" onClick={toStories} size="large" startIcon={<BsFillArchiveFill />}></Button>
+          <Button variant="outlined" onClick={toFeeds} size="large" startIcon={<AiOutlineUnorderedList />}></Button>
+          <Button variant="outlined" onClick={toSubscribe} size="large" startIcon={<SiAddthis />}></Button>
         </div>
       </Toolbar>
     </AppBar>

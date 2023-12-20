@@ -38,12 +38,13 @@ const storySchema = new mongoose.Schema(
     },
     entryId: {
       type: String,
-      required: true,
-      unique: true
+      required: true
     },
   },
   {
     timestamps: true,
   }
 );
+storySchema.index({ feed: 1, entryId: 1}, { unique: true });
+
 export default mongoose.model("Story", storySchema);

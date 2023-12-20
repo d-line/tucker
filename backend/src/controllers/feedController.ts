@@ -72,7 +72,6 @@ export const feedSubscribe = async (
         return acc.getTime() > curDate.getTime() ? acc : curDate;
       }, new Date(discovered.items[0].pubDate)
     ));
-    console.log(maxDate);
     feed.lastFetched = maxDate;
     await feed.save();
     return res.status(201).json(feed);

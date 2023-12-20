@@ -66,6 +66,14 @@ export const feedSubscribe = async (
         await story.save();
       })
     );
+    let maxDate = new Date(discovered.items.reduce(
+      (acc, cur) => {
+        const curDate = new Date(cur.pubDate);
+        return acc.getTime() > curDate.getTime() ? acc : curDate;
+      }, new Date(discovered.items[0].pubDate)
+    ));
+    feed.lastFetched = maxDate;
+    await feed.save();
     return res.status(201).json(feed);
   } catch (error) {
     console.log(error);

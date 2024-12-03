@@ -24,7 +24,7 @@
     "express-validator": "^7.0.1",
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
-    "mongoose": "^7.6.3",
+    "mongoose": "^8.8.3",
     "morgan": "^1.10.0",
     "rss-finder": "^2.1.5",
     "rss-parser": "^3.13.0"
